@@ -12,9 +12,23 @@ datasource db {
 
 
 model users {
-  id  Int   @id @default(autoincrement())
-  name  String
-  username  String    @unique
-  email String    @unique
-  password  String
+  id              Int        @id @default(autoincrement())
+  name            String
+  username        String     @unique
+  email           String     @unique
+  master_password String
+  linkedinId      String     @unique
+  passwords       passwords[] // Add this field to establish the opposite relation
 }
+
+
+
+model passwords {
+  id         Int     @id @default(autoincrement())
+  website    String
+  username   String
+  password   String
+  userId     Int
+  user       users   @relation(fields: [userId], references: [id])
+}
+
